@@ -1,6 +1,6 @@
 from idcardgenratorv2 import generator_from
 if __name__ == '__main__':
-    with open('./all_personinfo','r')as f:
+    with open('../all_personinfo','r')as f:
         lines = f.readlines()
     sum = len(lines)
     count = 0
@@ -12,7 +12,7 @@ if __name__ == '__main__':
             exit()
         starttime = datetime.datetime.now()
         ename, esex, enation, eyear, emon, eday, eaddr, eidn,eorg, elife  = line.strip().split(',')
-        generator_from(ename,esex,enation,eyear,emon,eday,eorg,elife,eaddr,eidn)
+        generator_from(ename,esex,enation,eyear,emon,eday,eorg,elife,eaddr,eidn,isOnlyAddr=True)
 
         endtime = datetime.datetime.now()
 
