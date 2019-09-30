@@ -1,0 +1,11 @@
+./Data/life/*
+./Data/Addr/*
+./Data/Birth/*
+./Data/ID/*
+./Data/Name/*
+./Data/Sex/*
+./Data/Sign/*
+*.png
+*.jpg
+*.idea/
+all_personinfo
