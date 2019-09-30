@@ -5,12 +5,7 @@ from PIL import ImageFont, ImageDraw
 import cv2
 import numpy as np
 
-
-
-if getattr(sys, 'frozen', None):
-    base_dir = os.path.join(sys._MEIPASS, 'usedres')
-else:
-    base_dir = os.path.join(os.path.dirname(__file__), 'usedres')
+base_dir = './resource'
 
 
 def changeBackground(img, img_back, zoom_size, center):
