@@ -13,7 +13,5 @@ if __name__ == '__main__':
         starttime = datetime.datetime.now()
         ename, esex, enation, eyear, emon, eday, eaddr, eidn,eorg, elife  = line.strip().split(',')
         generator_from(ename,esex,enation,eyear,emon,eday,eorg,elife,eaddr,eidn)
-
         endtime = datetime.datetime.now()
-
         print(endtime - starttime)

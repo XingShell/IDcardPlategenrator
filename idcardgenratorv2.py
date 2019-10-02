@@ -191,7 +191,7 @@ def save_plate(savedir, box, im):
         box[3] += 100
         while start + 11 < len(savedir):
             a = im.crop(box).convert('RGB')
-            a.save('./Data/' + Dir + savedir[start:start + 11]+'.jpg')
+            a.save(base_dir + Dir + savedir[start:] + '.jpg')
             start += 11
             box[1] += 100
             box[3] += 100
