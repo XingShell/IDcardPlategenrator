@@ -6,11 +6,7 @@ import cv2
 import numpy as np
 from os.path import *
 
-dir_path = dirname(abspath(__file__))
-# print('当前目录绝对路径:', dir_path)
-base_dir = './resource'
-base_dir = dir_path+'/'+ base_dir
-im = PImage.open(os.path.join(base_dir, 'empty.png'))
+
 
 def changeBackground(img, img_back, zoom_size, center):
     # 缩放
@@ -56,6 +52,11 @@ def paste(avatar, bg, zoom_size, center):
 def generator_from(ename,esex,enation,eyear,emon,eday,eorg,elife,eaddr,eidn,\
                    isOnlyAddr=False,isOnlyName=False,isOnlySexNation=False,isOnlyBirth=False,\
                    isOnlyNumberID=False, isOnlyGovSige=False, isOnlyLife=False):
+    dir_path = dirname(abspath(__file__))
+    # print('当前目录绝对路径:', dir_path)
+    base_dir = './resource'
+    base_dir = dir_path + '/' + base_dir
+    im = PImage.open(os.path.join(base_dir, 'empty.png'))
     name = ename
     sex = esex
     nation = enation
@@ -166,7 +167,9 @@ def generator_from_quick(im,ename,esex,enation,eyear,emon,eday,eorg,elife,eaddr,
 
 
     # avatar = PImage.open(fname)  # 500x670
-
+    base_dir = './resource'
+    dir_path = dirname(abspath(__file__))
+    base_dir = dir_path + '/' + base_dir
     name_font = ImageFont.truetype(os.path.join(base_dir, 'hei.ttf'), 72)
     other_font = ImageFont.truetype(os.path.join(base_dir, 'hei.ttf'), 60)
     bdate_font = ImageFont.truetype(os.path.join(base_dir, 'fzhei.ttf'), 60)
@@ -260,7 +263,7 @@ def save_plate(savedir, box, im):
             Dir = 'Sex/'
         elif savedir[0:2]=='出生':
             Dir = 'Birth/'
-        elif savedir[0:7] == '公民身份证号码':
+        elif savedir[0:4] == '公民身份':
             Dir = 'ID/'
         elif savedir[0:4] == '签发机关':
             Dir = 'Sign/'

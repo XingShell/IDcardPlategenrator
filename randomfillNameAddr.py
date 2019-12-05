@@ -46,9 +46,8 @@ def paste(avatar, bg, zoom_size, center):
     return bg
 
 
-def generator_from(string):
-    base_dir = './resource'
-    im = PImage.open(os.path.join(base_dir, 'empty.png'))
+def generator_from(im,string):
+
 
     name_font = ImageFont.truetype(os.path.join(base_dir, 'hei.ttf'), 72)
     other_font = ImageFont.truetype(os.path.join(base_dir, 'hei.ttf'), 60)
@@ -93,5 +92,8 @@ if __name__ == '__main__':
     from allPosibleChars import loadstring
     s = loadstring(11,40,1)
     # strings = '12345678901ewqdqwdwqe13212e12e211d43r34gvreg390jg9035j4g90j49gj903j90gj390gj30gj'
+    base_dir = './resource'
+    im = PImage.open(os.path.join(base_dir, 'empty.png'))
     for chars in s:
-        generator_from(chars)
+        img = im.copy()
+        generator_from(img,chars)

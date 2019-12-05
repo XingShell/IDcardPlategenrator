@@ -10,16 +10,12 @@ base_dir = '../resource'
 base_dir = dir_path+'/'+ base_dir
 im = PImage.open(os.path.join(base_dir, 'empty.png'))
 if __name__ == '__main__':
-    setIDnumbers = set()
+    setNames = set()
     for row in open("../all_personinfo"):
         ename, esex, enation, eyear, emon, eday, eaddr, eidn, eorg, elife = row.strip().split(',')
-        strIDnumber = eidn
-        setIDnumbers.add(strIDnumber)
-    print(len(setIDnumbers)) # 2874939
-    num = 10000
-    for e in setIDnumbers:
+        strName = ename
+        setNames.add(strName)
+    print(len(setNames)) # 1163760
+    for e in setNames:
         imcopy = im.copy()
-        generator_from_quick(imcopy,ename,esex,enation,eyear,emon,eday,eorg,elife,eaddr,e,isOnlyNumberID=True)
-        num -= 1
-        if num <= 0:
-            break
+        generator_from_quick(imcopy,e,esex,enation,eyear,emon,eday,eorg,elife,eaddr,eidn,isOnlyName=True)
