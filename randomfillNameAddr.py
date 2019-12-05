@@ -74,6 +74,7 @@ def save_plate(string, box, im):
     start = 0
     loc = 1120
     box =list(box)
+    string = string.replace(' ','')
     while start + 11 < len(string):
         a = im.crop(box).convert('RGB')
         a.save('./Data/' + Dir + string[start:start + 11]+'.jpg')
@@ -90,7 +91,7 @@ def save_plate(string, box, im):
 if __name__ == '__main__':
     from allPosibleChars import AllPossibleChinese as strings
     from allPosibleChars import loadstring
-    s = loadstring(11,40,100)
+    s = loadstring(11,40,1)
     # strings = '12345678901ewqdqwdwqe13212e12e211d43r34gvreg390jg9035j4g90j49gj903j90gj390gj30gj'
     for chars in s:
         generator_from(chars)

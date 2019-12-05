@@ -24,6 +24,6 @@ if __name__ == '__main__':
         ename, esex, enation, eyear, emon, eday, eaddr, eidn, eorg, elife = row.strip().split(',')
         strAddr = eaddr
         setAddr.add(strAddr)
-    print(len(setAddr)) # 69336
+    print(len(setAddr)) # 693336
     for e in setAddr:
         generator_from(ename,esex,enation,eyear,emon,eday,eorg,elife,e,eidn,isOnlyAddr=True)

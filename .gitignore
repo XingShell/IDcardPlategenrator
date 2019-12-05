@@ -9,3 +9,4 @@
 *.jpg
 *.idea/
 all_personinfo
+**/__pycache__

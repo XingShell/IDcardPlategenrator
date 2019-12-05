@@ -4,9 +4,13 @@ import PIL.Image as PImage
 from PIL import ImageFont, ImageDraw
 import cv2
 import numpy as np
+from os.path import *
 
-
-
+dir_path = dirname(abspath(__file__))
+# print('当前目录绝对路径:', dir_path)
+base_dir = './resource'
+base_dir = dir_path+'/'+ base_dir
+im = PImage.open(os.path.join(base_dir, 'empty.png'))
 
 def changeBackground(img, img_back, zoom_size, center):
     # 缩放
@@ -44,7 +48,7 @@ def paste(avatar, bg, zoom_size, center):
         for j in range(cols):
             bg[center[0] + i, center[1] + j] = avatar[i, j]
     return bg
-from os.path import *
+
 #     im.save('color.png')
 #     im.convert('L').save('bw.png')
 #
@@ -63,11 +67,7 @@ def generator_from(ename,esex,enation,eyear,emon,eday,eorg,elife,eaddr,eidn,\
     addr = eaddr
     idn = eidn
 
-    dir_path = dirname(abspath(__file__))
-    # print('当前目录绝对路径:', dir_path)
-    base_dir = './resource'
-    base_dir = dir_path+'/'+ base_dir
-    im = PImage.open(os.path.join(base_dir, 'empty.png'))
+
     # avatar = PImage.open(fname)  # 500x670
 
     name_font = ImageFont.truetype(os.path.join(base_dir, 'hei.ttf'), 72)
@@ -88,7 +88,104 @@ def generator_from(ename,esex,enation,eyear,emon,eday,eorg,elife,eaddr,eidn,\
             '性别' + sex + '民族' + nation, \
             '出生' + year + '年' + mon + '月' + day + '日', \
             '住址' + addr, \
-            '身份号码' + idn, \
+            '公民身份证号码' + idn, \
+            '签发机关' + org, \
+            '有效期限' + life
+            )
+
+    draw = ImageDraw.Draw(im)
+    index = -1
+    if True not in ( isOnlyAddr,isOnlyName,isOnlySexNation,isOnlyBirth,isOnlyNumberID, isOnlyGovSige, isOnlyLife):
+        draw.text((630, 690), name, fill=(0, 0, 0), font=name_font)
+        draw.text((630, 840), sex, fill=(0, 0, 0), font=other_font)
+        draw.text((1030, 840), nation, fill=(0, 0, 0), font=other_font)
+        draw.text((630, 980), year, fill=(0, 0, 0), font=bdate_font)
+        draw.text((950, 980), mon, fill=(0, 0, 0), font=bdate_font)
+        draw.text((1150, 980), day, fill=(0, 0, 0), font=bdate_font)
+        start = 0
+        loc = 1120
+        while start + 11 < len(addr):
+            draw.text((630, loc), addr[start:start + 11], fill=(0, 0, 0), font=other_font)
+            start += 11
+            loc += 100
+        draw.text((630, loc), addr[start:], fill=(0, 0, 0), font=other_font)
+        draw.text((950, 1475), idn, fill=(0, 0, 0), font=id_font)
+        draw.text((1050, 2750), org, fill=(0, 0, 0), font=other_font)
+        draw.text((1050, 2895), life, fill=(0, 0, 0), font=other_font)
+
+        for i in range(7):
+            box = Box[i]
+            info = Info[i]
+            save_plate(info,box,im)
+    else:
+        if isOnlyName:
+            draw.text((630, 690), name, fill=(0, 0, 0), font=name_font)
+            index = 0
+        if isOnlySexNation:
+            draw.text((630, 840), sex, fill=(0, 0, 0), font=other_font)
+            draw.text((1030, 840), nation, fill=(0, 0, 0), font=other_font)
+            index = 1
+        if isOnlyBirth:
+            draw.text((630, 980), year, fill=(0, 0, 0), font=bdate_font)
+            draw.text((950, 980), mon, fill=(0, 0, 0), font=bdate_font)
+            draw.text((1150, 980), day, fill=(0, 0, 0), font=bdate_font)
+            index = 2
+        if isOnlyAddr:
+            start = 0
+            loc = 1120
+            while start + 11 < len(addr):
+                draw.text((630, loc), addr[start:start + 11], fill=(0, 0, 0), font=other_font)
+                start += 11
+                loc += 100
+            draw.text((630, loc), addr[start:], fill=(0, 0, 0), font=other_font)
+            index = 3
+        if isOnlyNumberID:
+            draw.text((950, 1475), idn, fill=(0, 0, 0), font=id_font)
+            index = 4
+        if isOnlyGovSige:
+            draw.text((1050, 2750), org, fill=(0, 0, 0), font=other_font)
+            index = 5
+        if isOnlyLife:
+            draw.text((1050, 2895), life, fill=(0, 0, 0), font=other_font)
+            index = 6
+        save_plate(Info[index], Box[index], im)
+
+def generator_from_quick(im,ename,esex,enation,eyear,emon,eday,eorg,elife,eaddr,eidn,\
+                   isOnlyAddr=False,isOnlyName=False,isOnlySexNation=False,isOnlyBirth=False,\
+                   isOnlyNumberID=False, isOnlyGovSige=False, isOnlyLife=False):
+    name = ename
+    sex = esex
+    nation = enation
+    year = eyear
+    mon = emon
+    day = eday
+    org = eorg
+    life = elife
+    addr = eaddr
+    idn = eidn
+
+
+    # avatar = PImage.open(fname)  # 500x670
+
+    name_font = ImageFont.truetype(os.path.join(base_dir, 'hei.ttf'), 72)
+    other_font = ImageFont.truetype(os.path.join(base_dir, 'hei.ttf'), 60)
+    bdate_font = ImageFont.truetype(os.path.join(base_dir, 'fzhei.ttf'), 60)
+    id_font = ImageFont.truetype(os.path.join(base_dir, 'ocrb10bt.ttf'), 72)
+
+    namebox = (430, 690, 900, 780)
+    sexnationBox = (430, 840, 1200, 900)
+    birthbox = (430, 950, 1300, 1050)
+    addrbox = (430, 1090, 1400, 1220)
+    idnbox = (430, 1450, 1800, 1550)
+    signGovbox = (700, 2750, 1800, 2840)
+    lifebox = (700, 2860, 1800, 2990)
+
+    Box = (namebox, sexnationBox, birthbox, addrbox, idnbox, signGovbox, lifebox)
+    Info = ('姓名' + name,\
+            '性别' + sex + '民族' + nation, \
+            '出生' + year + '年' + mon + '月' + day + '日', \
+            '住址' + addr, \
+            '公民身份证号码' + idn, \
             '签发机关' + org, \
             '有效期限' + life
             )
@@ -163,7 +260,7 @@ def save_plate(savedir, box, im):
             Dir = 'Sex/'
         elif savedir[0:2]=='出生':
             Dir = 'Birth/'
-        elif savedir[0:2] == '身份':
+        elif savedir[0:7] == '公民身份证号码':
             Dir = 'ID/'
         elif savedir[0:4] == '签发机关':
             Dir = 'Sign/'
