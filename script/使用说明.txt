@@ -1,0 +1,7 @@
+ python .\Base.py --filepath ../resourse/newaddAddr.txt --model 5 # 产生地址
+ python .\Base.py --filepath ../resource/签发机关v1.txt --model 6 # 签发机关
+ python .\Base.py --filepath ../resource/Chinese_Names_Corpus_Gender（120W）.txt --model 1 # 名字
+python .\Base.py --filepath ../resource/民族.txt --model 4 # Sex&民族
+ python .\Base.py  --model 2 --numbers 500 # 身份证号码
+  python .\Base.py  --model 3 --numbers 500 # 出生日期
+  python .\Base.py  --model 7 --numbers 500 # 有效期限
